@@ -35,11 +35,21 @@ pipeline {
                 withSonarQubeEnv('sonarqube-server') {
                     sh '''
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=demo-app
+                     -Dsonar.projectKey=demo-app \
+  -Dsonar.projectName=demo-app \
+  -Dsonar.projectVersion=1.0
                     '''
-                }
+                }   
             }
         }
+
+        stage("Quality Gate") {
+    steps {
+        timeout(time: 2, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
+}
 
     }
 }
