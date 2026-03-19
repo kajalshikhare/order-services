@@ -21,12 +21,12 @@
 
  <snapshotRepository>
    <id>sandbox-snapshot</id>
-   <url>http://artifactory.local/artifactory/sb-sanpshot-local</url>
+   <url>http://artifactory-service.artifactory.svc.cluster.local:8082/artifactory/sb-sanpshot-local</url>
  </snapshotRepository>
 
  <repository>
    <id>sandbox-release</id>
-   <url>http://artifactory.local/artifactory/sb-release-local</url>
+   <url>http://artifactory-service.artifactory.svc.cluster.local:8082/artifactory/sb-release-local</url>
  </repository>
 
 </distributionManagement>
@@ -65,7 +65,6 @@
     <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter</artifactId>
-    <version>5.10.2</version>
     <scope>test</scope>
 </dependency>
 
