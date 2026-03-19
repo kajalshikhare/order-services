@@ -4,7 +4,7 @@ pipeline {
 
     tools {
         maven 'maven3'
-        jdk 'jdk-17'
+        // jdk 'jdk-17'
     }
 //     environment {
 //     ART_CREDS = credentials('artifactory')
