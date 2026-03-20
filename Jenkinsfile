@@ -92,6 +92,7 @@ stage('Deploy to Artifactory') {
             fileId: '261f015c-83e4-4b3c-8a4c-fb610202f84e',
             variable: 'MAVEN_SETTINGS'
         )]) {
+            sh "cat $MAVEN_SETTINGS"
 
             sh "mvn deploy -DskipTests -s $MAVEN_SETTINGS"
         }
