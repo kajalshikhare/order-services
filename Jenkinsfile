@@ -30,7 +30,7 @@ pipeline {
 // """
 // cat $MAVEN_SETTINGS
 //     }
-    }
+  //  }
 
         stage('Build') {
             steps {
