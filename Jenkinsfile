@@ -42,6 +42,7 @@ pipeline {
                      -Dsonar.projectKey=demo-app \
   -Dsonar.projectName=demo-app \
   -Dsonar.projectVersion=1.0
+  -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml'
                     '''
                 }   
             }
