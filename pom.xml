@@ -17,6 +17,12 @@
   <artifactId>spring-boot-starter-parent</artifactId>
   <version>3.2.5</version>
  </parent>
+  <pluginRepositories>
+        <pluginRepository>
+            <id>artifactory</id>
+            <url>http://artifactory-service.artifactory.svc.cluster.local:8082/artifactory/sb-virtual-repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
  <distributionManagement>
 
