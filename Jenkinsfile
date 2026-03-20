@@ -17,6 +17,15 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Clean Maven Cache') {
+    steps {
+       sh '''
+rm -rf ~/.m2/repository
+mvn clean install -X
+echo "sucess"
+'''
+    }
+    }
 
         stage('Build') {
             steps {
