@@ -89,16 +89,17 @@ pipeline {
                 variable: 'MAVEN_SETTINGS'
             )]) {
 
-                sh """
-                cat $MAVEN_SETTINGS \
-                mvn clean install -s $MAVEN_SETTINGS -X
-                mvn clean deploy \
-                -DskipTests \
-                -s $MAVEN_SETTINGS \
-                -DART_USER=$USER \
-                -DART_PASS=$PASS
+             sh """
+cat $MAVEN_SETTINGS
 
-                """
+mvn clean install -s $MAVEN_SETTINGS -X
+
+mvn clean deploy \
+-DskipTests \
+-s $MAVEN_SETTINGS \
+-DART_USER=$USER \
+-DART_PASS=$PASS
+"""
             }
         }
     }
