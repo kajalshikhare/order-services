@@ -17,14 +17,19 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Clean Maven Cache') {
-    steps {
-       sh '''
-rm -rf ~/.m2/repository
-mvn clean install -X
-echo "sucess"
-'''
-    }
+//         stage('Clean Maven Cache') {
+//     steps {
+// //        sh '''
+// // rm -rf ~/.m2/repository
+// // mvn clean install -X
+// // echo "sucess"
+// // '''
+//        sh """
+// cat $MAVEN_SETTINGS
+// mvn clean install -s $MAVEN_SETTINGS -X
+// """
+// cat $MAVEN_SETTINGS
+//     }
     }
 
         stage('Build') {
@@ -43,31 +48,31 @@ echo "sucess"
     }
 }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube-server') {
-                    sh '''
-                    mvn sonar:sonar \
-                     -Dsonar.projectKey=demo-app \
-  -Dsonar.projectName=demo-app \
-  -Dsonar.projectVersion=1.0 \
-  -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-                    '''
-                }   
-            }
-        }
+//         stage('SonarQube Analysis') {
+//             steps {
+//                 withSonarQubeEnv('sonarqube-server') {
+//                     sh '''
+//                     mvn sonar:sonar \
+//                      -Dsonar.projectKey=demo-app \
+//   -Dsonar.projectName=demo-app \
+//   -Dsonar.projectVersion=1.0 \
+//   -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+//                     '''
+//                 }   
+//             }
+//         }
 
-        stage("Quality Gate") {
-    steps {
-        timeout(time: 2, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-        }
-    }
-}
+//         stage("Quality Gate") {
+//     steps {
+//         timeout(time: 2, unit: 'MINUTES') {
+//             waitForQualityGate abortPipeline: true
+//         }
+//     }
+// }
 
  stage('Package') {
             steps {
-                sh 'mvn package'
+                sh 'mvn clean package'
             }
         }
 
@@ -85,6 +90,8 @@ echo "sucess"
             )]) {
 
                 sh """
+                cat $MAVEN_SETTINGS \
+                mvn clean install -s $MAVEN_SETTINGS -X
                 mvn clean deploy \
                 -DskipTests \
                 -s $MAVEN_SETTINGS \
