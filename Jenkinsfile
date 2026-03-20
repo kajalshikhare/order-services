@@ -76,7 +76,7 @@ pipeline {
             )]) {
 
                 sh """
-                mvn deploy \
+                mvn clean deploy \
                 -DskipTests \
                 -s $MAVEN_SETTINGS \
                 -DART_USER=$USER \
