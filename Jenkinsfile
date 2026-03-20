@@ -78,13 +78,14 @@ pipeline {
                 mvn deploy \
                 -DskipTests \
                 -s $MAVEN_SETTINGS \
+                -DART_USER=$USER \
+                -DART_PASS=$PASS
+
                 """
             }
         }
     }
 }
-// -DART_USER=$USER \
-                // -DART_PASS=$PASS
 
     }
 }
