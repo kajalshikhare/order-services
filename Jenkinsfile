@@ -94,8 +94,8 @@ mvn clean install -s $MAVEN_SETTINGS -X
 mvn clean deploy \
 -DskipTests \
 -s $MAVEN_SETTINGS \
--DART_USER=$USER \
--DART_PASS=$PASS
+-DART_USER=$ART_USER \
+-DART_PASS=$RT_PASS
 """
             }
         }
