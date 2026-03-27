@@ -75,14 +75,11 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-
-       stage('Deploy to Artifactory') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'artifactory',
-            usernameVariable: 'USER',
-            passwordVariable: 'PASS'
-        )]) {
+withCredentials([usernamePassword(
+    credentialsId: 'artifactory',
+    usernameVariable: 'ART_USER',
+    passwordVariable: 'ART_PASS'
+)])
 
             configFileProvider([configFile(
                 fileId: '261f015c-83e4-4b3c-8a4c-fb610202f84e',
