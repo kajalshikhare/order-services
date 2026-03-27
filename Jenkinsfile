@@ -43,10 +43,10 @@ pipeline {
                 sh 'mvn clean test'
             }
             post {
-    always {
-        junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-    }
-}
+                always {
+                    junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+                }
+            }
         }
 //         stage('SonarQube Analysis') {
 //             steps {
@@ -70,39 +70,40 @@ pipeline {
 //     }
 // }
 
- stage('Package') {
+        stage('Package') {
             steps {
                 sh 'mvn clean package'
             }
         }
-withCredentials([usernamePassword(
-    credentialsId: 'artifactory',
-    usernameVariable: 'ART_USER',
-    passwordVariable: 'ART_PASS'
-)])
 
-            configFileProvider([configFile(
-                fileId: '261f015c-83e4-4b3c-8a4c-fb610202f84e',
-                variable: 'MAVEN_SETTINGS'
-            )]) {
+        stage('Deploy to Artifactory') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'artifactory',
+                    usernameVariable: 'ART_USER',
+                    passwordVariable: 'ART_PASS'
+                )]) {
 
-             sh """
-cat $MAVEN_SETTINGS
+                    configFileProvider([configFile(
+                        fileId: '261f015c-83e4-4b3c-8a4c-fb610202f84e',
+                        variable: 'MAVEN_SETTINGS'
+                    )]) {
 
-mvn clean install -s $MAVEN_SETTINGS -X
+                        sh """
+cat \$MAVEN_SETTINGS
+
+mvn clean install -s \$MAVEN_SETTINGS -X
 
 mvn clean deploy \
 -DskipTests \
--s $MAVEN_SETTINGS \
--DART_USER=$ART_USER \
--DART_PASS=$RT_PASS
+-s \$MAVEN_SETTINGS \
+-DART_USER=\$ART_USER \
+-DART_PASS=\$ART_PASS
 """
+                    }
+                }
             }
         }
-    }
-}
-
-
 
     }
 }
