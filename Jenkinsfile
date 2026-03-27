@@ -34,6 +34,19 @@ pipeline {
 
         stage('Build') {
             steps {
+                sh '''
+echo "=== WHO AM I ==="
+whoami
+
+echo "=== HOME DIR ==="
+echo $HOME
+
+echo "=== CHECK MAVEN GLOBAL SETTINGS ==="
+ls -la ~/.m2 || true
+
+echo "=== CONTENT ==="
+cat ~/.m2/settings.xml || echo "No global settings"
+'''
                 sh 'mvn clean compile'
             }
         }
